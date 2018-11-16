@@ -6,42 +6,23 @@ class TreeNode:
          self.right = None
 
 class Solution:
-    def InorderTraversal(self, root1, temp_ls):
-            # temp_ls will be a list representing the inorder traversal
-            # of tree
-            if root1 == None:
-                return
-            self.InorderTraversal(root1.left, temp_ls)
-            temp_ls.append(root1.val)
-            self.InorderTraversal(root1.right, temp_ls)
-            return 
+   
 
     def isSymmetric(self, root):
         """
         :type root: TreeNode
         :rtype: bool
         """
-        temp_ls = []
-        self.InorderTraversal(root, temp_ls)
-        for val in temp_ls:
-            print("{}\t".format(val))
-    
-        beg = 0
-        end = len(temp_ls) - 1
-        while beg < end:
-            if temp_ls[beg] != temp_ls[end]:
-                return False
-            beg += 1
-            end -= 1
-        
-        return True
+        if root is None:
+            return True
+        return self.isMirror(root.left, root.right)
 
-root = TreeNode(1)
-root.left = TreeNode(2)
-root.left.left = None #TreeNode(3)
-root.left.right = TreeNode(3)
-root.right = TreeNode(2)
-root.right.left = None # TreeNode(4)
-root.right.right = TreeNode(3)
-
-print("symmetric? {}".format(Solution().isSymmetric(root)))
+    def isMirror(self, root1, root2):
+        # check if two trees are mirror image of each other
+        if root1 is None and root2 is None:
+            return True
+        if root1 is None or root2 is None:
+            return False
+        if root1.val != root2.val:
+            return False
+        return self.isMirror(root1.left, root2.right) and self.isMirror(root1.right, root2.left)
